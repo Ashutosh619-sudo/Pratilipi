@@ -1,0 +1,85 @@
+version: "3.9"
+
+services:
+
+  frontend:
+    build: 
+      context: ./frontend
+      network: host
+    command: ["npm", "start"]
+
+    volumes:
+      - ./frontend:/frontend
+      - ./frontend/node_modules:/frontend/node_modules
+    
+    ports:
+      - "3000:3000"
+  
+
+  user_app:
+    build : 
+      context: ./user_interaction_service
+      network: host
+    volumes:
+      - ./user_interaction_service:/django
+    ports:
+      - 8000:8000
+
+
+    image: user_app:django 
+    container_name: userapi_container
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DB_NAME=interaction
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - interaction_db
+
+  queue:
+    build:
+      context: ./content_service
+      dockerfile: Dockerfile
+    environment:
+      - DB_NAME=content
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: 'python consumer.py'
+    depends_on:
+      - interaction_db
+    
+  interaction_db:
+    image: postgres
+    container_name: pgdb_interaction
+    environment:
+      - POSTGRES_DB=interaction
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: -p 5433
+    expose:
+      - "5433"
+  
+  content_app:
+    build : ./content_service
+    volumes:
+      - ./content_service:/django
+    ports:
+      - 8001:8000
+
+    image: content_service:django 
+    container_name: content_container
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DB_NAME=content
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - content_db
+
+  content_db:
+    image: postgres
+    container_name: pgdb_content
+    environment:
+      - POSTGRES_DB=content
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

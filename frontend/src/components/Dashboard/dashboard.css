@@ -1,0 +1,30 @@
+.dashboard-heading {
+  text-align: center;
+  font-family: monospace;
+  font-weight: 500;
+  font-size: 2.5em;
+}
+
+.card-customize {
+  margin: 5px;
+  padding: 10px;
+}
+
+.title-color {
+  color: #7c1d11;
+  font-weight: 400;
+  font-size: 1.6em;
+}
+
+.desciption-customize {
+  font-weight: 300;
+  font-size: 0.9em;
+}
+
+.likes-customize {
+  font-weight: 300;
+}
+
+.published-date-customize {
+  font-weight: 300;
+}
