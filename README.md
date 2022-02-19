@@ -20,3 +20,7 @@ Content Service:
 
 User-interaction Service:
 ![](design/HLD_LLD/LLD_UserService.png)
+
+
+Database Schema:
+![](design/DatabaseSchema.png)
