@@ -5,10 +5,15 @@ Pratilipi assignment
 To start the project run: 
 
 Step 1: cd to frontend
+
 Step 2: npm install
+
 Step 3: cd ..
+
 Step 4: docker-compose up --build
+
 Step 4: docker-compose exec user_app python manage.py migrate
+
 Step 5: docker-compose exec content_app python manage.py migrate
 
 
