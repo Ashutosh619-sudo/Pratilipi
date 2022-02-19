@@ -6,4 +6,4 @@ To start the project run: docker-compose up --build
 
 
 High Level Desgin:
-![]("design/HLD and LLD/HLD.png")
+![](design/HLD_LLD/HLD.png)
